@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판 상세 글 보기 페이지</title>
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <script src="/js/jquery-3.7.0.js"></script>
+  <script src="/js/bootstrap.bundle.js"></script>
+  <script>
+    $(document).ready(function () {
+      // 리스트 버튼 클릭 시 이전 페이지로 이동
+      $("#btn-list").on("click", function () {
+        history.back();
+      });
+
+      // 삭제 버튼 클릭 시 게시물 삭제
+      $("#btn-delete").on("click", function () {
+        // 1. 버튼 클릭 시 form 태그를 가져옴
+        // 2. form 태그의 action 속성을 설정
+        // 3. submit 명령 실행
+
+        // jquery를 사용하여 id 값이 frm인 태그를 검색하여 js 변수에 저장
+        const frm = $("#frm")[0];
+        // 가져온 form 태그의 액션 속성에 delete 명령을 실행하는 서버주소를 설정
+        frm.action = "/board/deleteBoard.do";
+        // js로 해당 form의 submit 명령을 실행
+        frm.submit();
+      });
+
+      // 수정 버튼 클릭 시 게시물 수정
+      $("#btn-update").on("click", function () {
+        const frm = $("#frm")[0];
+        frm.action = "/board/updateBoard.do";
+        frm.submit();
+      });
+    });
+  </script>
+</head>
+<body>
+<header>
+  <div class="container p-5">
+    <div class="text-center">
+      <h1 class="text-center">스프링부트로 게시판 만들기</h1>
+      <h2 class="">게시판 글확인 페이지</h2>
+    </div>
+  </div>
+</header>
+
+<main class="container my-4">
+  <form id="frm" method="post">
+    <div class="row my-3">
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">글번호</span>
+          <input type="text" class="form-control" name="boardIdx" readonly th:value="${board.boardIdx}">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <span class="input-group-text">글제목</span>
+          <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요" th:value="${board.title}">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">조회수</span>
+          <input type="text" class="form-control" readonly th:value="${board.hitCnt}">
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">글쓴이</span>
+          <input type="text" class="form-control" readonly th:value="${board.createId}">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">등록날짜</span>
+          <input type="text" class="form-control" readonly th:value="${board.createDt}">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">수정자</span>
+          <input type="text" class="form-control" name="updateId" placeholder="사용자 ID를 입력하세요" th:value="${board.updateId}">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="input-group">
+          <span class="input-group-text">수정날짜</span>
+          <input type="text" class="form-control" name="updateDt" th:value="${board.updateDt}">
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-sm">
+        <label for="contents" class="form-label">글내용 : </label>
+        <textarea class="form-control" rows="5" id="contents" name="contents" placeholder="내용을 입력하세요" th:text="${board.contents}"></textarea>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-sm">
+        <button type="button" class="btn btn-secondary" id="btn-list">목록</button>
+      </div>
+      <div class="col-sm d-flex justify-content-end">
+        <button type="button" class="btn btn-danger me-2" id="btn-delete">삭제</button>
+        <button type="button" class="btn btn-warning" id="btn-update">수정</button>
+      </div>
+    </div>
+  </form>
+
+</main>
+
+<footer class="container-fluid border-top p-5 mt-5 text-center">
+  <p class="lead text-muted">made by fullstack 595</p>
+</footer>
+</body>
+</html>
