@@ -269,6 +269,17 @@
       <p>first : <span th:text="${itemStat.first}"></span></p>
       <p>last : <span th:text="${itemStat.last}"></span></p>
     </div>
+    <br>
+    <div th:each="arr : ${itemArray}">
+      <p>index : <span th:text="${arrStat.index}"></span></p>
+      <p>count : <span th:text="${arrStat.count}"></span></p>
+      <p>size : <span th:text="${arrStat.size}"></span></p>
+      <p>current : <span th:text="${arrStat.current}"></span></p>
+      <p>even : <span th:text="${arrStat.even}"></span></p>
+      <p>odd : <span th:text="${arrStat.odd}"></span></p>
+      <p>first : <span th:text="${arrStat.first}"></span></p>
+      <p>last : <span th:text="${arrStat.last}"></span></p>
+    </div>
   </div>
 
   <br>
