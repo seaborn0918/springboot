@@ -29,11 +29,12 @@
       });
 
       // 수정 버튼 클릭 시 게시물 수정
-      $("#btn-update").on("click", function () {
+      $("#btn-update").on("click", function() {
         const frm = $("#frm")[0];
         frm.action = "/board/updateBoard.do";
         frm.submit();
       });
+
     });
   </script>
 </head>
