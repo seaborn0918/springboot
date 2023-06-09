@@ -1,10 +1,13 @@
 package com.bitc.board1.controller;
 
 import com.bitc.board1.DTO.BoardDTO;
+import com.bitc.board1.DTO.BoardFileDTO;
 import com.bitc.board1.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.List;
 
 // @Controller 해당 클래스가 Spring MVC 패턴에서 Controller로 동작하는 것을 설정하는 어노테이션
@@ -23,7 +29,7 @@ import java.util.List;
 public class BoardController {
   // @Autowired : 해당 객체를 스프링프레임워크에서 직접 객체를 생성하고 관리하도록 설정하는 어노테이션
   // 요즘에는 @RequiredArgsConstructor 사용
-  // BoardService 타입의 변수 선언
+  // BoardService 타입의 변수 선언(서비스 호출 위해)
   @Autowired
   private BoardService boardService;
 
@@ -132,4 +138,25 @@ public class BoardController {
     return "redirect:/board/boardList.do";
   }
 
+  // 첨부파일 다운로드
+  @RequestMapping(value = "/downloadBoardFile", method = RequestMethod.GET)
+  public void downloadBoardFile(
+      @RequestParam("idx") int idx,
+      @RequestParam("boardIdx") int boardIdx,
+      HttpServletResponse resp
+  ) throws Exception {
+    BoardFileDTO boardFile = boardService.selectBoardFileInfo(idx, boardIdx);
+
+    if (ObjectUtils.isEmpty(boardFile) == false){
+      String fileName = boardFile.getOriginalFileName();
+      byte[] files = FileUtils.readFileToByteArray(new File(boardFile.getStoredFileName()));
+
+      resp.setContentType("application/octet-stream");
+      resp.setContentLength(files.length);
+      resp.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\"");
+      resp.getOutputStream().write(files);
+      resp.getOutputStream().flush();
+      resp.getOutputStream().close();
+    }
+  }
 }
