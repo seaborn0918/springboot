@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,7 +36,7 @@ public class LoginController {
       session.setAttribute("userId", userInfo.getUserId());
       session.setAttribute("userName", userInfo.getUserName());
       session.setAttribute("userEmail", userInfo.getUserEmail());
-      session.setMaxInactiveInterval(180);
+      session.setMaxInactiveInterval(60);
 
       return "redirect:/login/loginSuccess";
     } else {
@@ -42,17 +44,16 @@ public class LoginController {
     }
   }
 
-  // 로그인 성공
+   // 로그인 성공
   @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
   public ModelAndView doLoginSuccess(HttpServletRequest req) throws Exception {
-    ModelAndView mv = new ModelAndView("/board/");
+    ModelAndView mv = new ModelAndView("redirect:/board/");
 
     HttpSession session = req.getSession();
     UserDTO user = new UserDTO();
     user.setUserId((String) session.getAttribute("userId"));
     user.setUserName((String) session.getAttribute("userName"));
     user.setUserEmail((String) session.getAttribute("userEmail"));
-
     mv.addObject("userInfo", user);
 
     return mv;
