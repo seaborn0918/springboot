@@ -1,23 +1,22 @@
-package com.bitc.board3.service;
+package com.bitc.springboard_ksh.mapper;
 
-import com.bitc.board3.DTO.BoardDTO;
+import com.bitc.springboard_ksh.DTO.BoardDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-public interface BoardService {
-  // 게시물 전체 목록 출력
+@Mapper
+public interface BoardMapper {
   List<BoardDTO> selectBoardList() throws Exception;
 
-  // 게시물 상세 내용 출력
   BoardDTO selectBoardDetail(int boardIdx) throws Exception;
 
-  // 게시물 등록
+  void updateHitCount(int boardIdx) throws Exception;
+
   void insertBoard(BoardDTO board) throws Exception;
 
-  // 게시물 수정
   void updateBoard(BoardDTO board) throws Exception;
 
-  // 게시물 삭제
   void deleteBoard(int boardIdx) throws Exception;
 
 }

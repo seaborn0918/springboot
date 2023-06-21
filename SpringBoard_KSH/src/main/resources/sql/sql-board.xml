@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bitc.springboard_ksh.mapper.BoardMapper">
+    <!-- 게시물 목록 -->
+    <select id="selectBoardList" resultType="com.bitc.springboard_ksh.DTO.BoardDTO">
+        SELECT
+            board_idx, title, create_id, create_dt, hit_cnt
+        FROM
+            spring_board_ksh
+        ORDER BY
+            board_idx DESC
+    </select>
+
+    <!-- 상세 페이지 -->
+    <select id="selectBoardDetail" parameterType="int" resultType="com.bitc.springboard_ksh.DTO.BoardDTO">
+        SELECT
+            board_idx, title, contents, create_id, create_dt, update_dt, hit_cnt
+        FROM
+            spring_board_ksh
+        WHERE
+            board_idx = #{boardIdx}
+    </select>
+
+    <!-- 조회수 업데이트 -->
+    <update id="updateHitCount" parameterType="int">
+        UPDATE
+            spring_board_ksh
+        SET
+            hit_cnt = hit_cnt + 1
+        WHERE
+            board_idx = #{boardIdx}
+    </update>
+
+    <!-- 글등록 -->
+    <insert id="insertBoard" parameterType="com.bitc.springboard_ksh.DTO.BoardDTO">
+        INSERT INTO
+            spring_board_ksh(title, contents, create_id, create_dt)
+        VALUES
+            (#{title}, #{contents}, #{createId}, NOW());
+    </insert>
+
+    <!-- 글 수정 -->
+    <update id="updateBoard" parameterType="com.bitc.springboard_ksh.DTO.BoardDTO">
+        UPDATE
+            spring_board_ksh
+        SET
+            title = #{title}, contents = #{contents}, update_dt = NOW()
+        WHERE
+            board_idx = #{boardIdx}
+    </update>
+
+    <!-- 글삭제 -->
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM
+            spring_board_ksh
+        WHERE
+            board_idx = #{boardIdx};
+    </delete>
+</mapper>

@@ -12,7 +12,7 @@
             crossorigin="anonymous"></script>
   <script>
     $(document).ready(function () {
-      $("#btn_load").on("click", function () {
+      $("#btn-load").on("click", function () {
         const pageNO = $("#pageNo").val();
         const numOfRows = $("#numOfRows").val();
         const datas = {pageNo: pageNO, numOfRows: numOfRows}
@@ -78,9 +78,13 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-end">
-    <input type="text" class="form-control" id="pageNo" name="pageNo">
-    <input type="text" class="form-control" id="numOfRows" name="numOfRows">
-    <button type="button" class="btn btn-primary" id="btn_load">불러오기</button>
+    <div class="me-2">
+      <input type="text" class="form-control" id="pageNo">
+    </div>
+    <div class="me-2">
+      <input type="type" class="form-control" id="numOfRows">
+    </div>
+    <button type="button" class="btn btn-primary" id="btn-load">불러오기</button>
   </div>
 </div>
 </body>
