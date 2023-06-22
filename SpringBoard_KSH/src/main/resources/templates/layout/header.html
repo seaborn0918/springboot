@@ -15,7 +15,8 @@
 <nav th:fragment="navbar" class="navbar navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/board/">HOME</a>
-    <a class="btn btn-primary" href="/login/">로그인</a>
+    <a th:if="${session.userId} == null" class="btn btn-primary" href="/login/">로그인</a>
+    <a th:unless="${session.userId} == null" class="btn btn-primary" href="#">로그아웃</a>
   </div>
 </nav>
 <header th:fragment="header-basic" class="container-fluid my-5 p-5 border-bottom">

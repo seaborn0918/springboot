@@ -46,7 +46,7 @@ public class LoginController {
 
    // 로그인 성공
   @RequestMapping(value = "/loginSuccess", method = RequestMethod.GET)
-  public ModelAndView doLoginSuccess(HttpServletRequest req) throws Exception {
+  public ModelAndView loginSuccess(HttpServletRequest req) throws Exception {
     ModelAndView mv = new ModelAndView("redirect:/board/");
 
     HttpSession session = req.getSession();

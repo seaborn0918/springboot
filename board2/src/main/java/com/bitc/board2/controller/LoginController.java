@@ -65,7 +65,7 @@ public class LoginController {
     // 2. 세션 정보 화면에 출력
 
     // ModelAndView 객체 생성. View 화면 설정
-    ModelAndView mv = new ModelAndView();
+    ModelAndView mv = new ModelAndView("/login/loginOK");
 
     // 세션 정보 가져오기
     HttpSession session = req.getSession();
