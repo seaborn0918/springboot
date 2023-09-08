@@ -33,8 +33,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     // registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/smart505/images/img1/", "file:///C:/smart505/images/img2/");
 
     // application.properties 파일 설정값을 사용하는 방식
-    String path1 = "file:///" + imgLocation1;
-    String path2 = "file:///" + imgLocation2;
+    String path1 = "file://" + imgLocation1;
+    String path2 = "file://" + imgLocation2;
     registry.addResourceHandler("/img2/**").addResourceLocations(path1, path2);
 
   }
